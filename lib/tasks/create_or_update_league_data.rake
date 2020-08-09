@@ -8,14 +8,14 @@ namespace :draft_app do
     log = Logger.new('log/league_data_task.log')
     start_time = Time.now
     log.info "League data task started at #{start_time}"
-    url = URI("https://api-football-v1.p.rapidapi.com/v2/leagues")
-    # url = URI("https://www.api-football.com/demo/v2/leagues")
+    url = URI("#{AppConfig['data_api']['api_link']}/leagues")
+    # url = URI("#{AppConfig['data_api']['api_demo_link']}/leagues")
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new(url)
-    request["x-rapidapi-host"] = 'api-football-v1.p.rapidapi.com'
-    request["x-rapidapi-key"] = '7df93b8d1fmsh59b5df99ff2419bp1911a4jsnf45f8c592930'
+    request["x-rapidapi-host"] = AppConfig["data_api"]["x-rapidapi-host"]
+    request["x-rapidapi-key"] = AppConfig["data_api"]["x-rapidapi-key"]
     response = http.request(request)
     league_datas = JSON.parse(response.read_body, symbolize_names: true)[:api][:leagues]
     if league_datas.present?

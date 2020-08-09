@@ -11,14 +11,14 @@ namespace :draft_app do
     # enabled_leagues = Configuration.enabled_leagues.collect(&:league_id)
     enabled_leagues = [530, 524]
     enabled_leagues.each do |key|
-      url = URI("https://api-football-v1.p.rapidapi.com/v2/teams/league/#{key}")
-      # url = URI("https://www.api-football.com/demo/v2/teams/league/#{key}")
+      url = URI("#{AppConfig['data_api']['api_link']}/teams/league/#{key}")
+      # url = URI("#{AppConfig['data_api']['api_demo_link']}/teams/league/#{key}")
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = Net::HTTP::Get.new(url)
-      request["x-rapidapi-host"] = 'api-football-v1.p.rapidapi.com'
-      request["x-rapidapi-key"] = '7df93b8d1fmsh59b5df99ff2419bp1911a4jsnf45f8c592930'
+      request["x-rapidapi-host"] = AppConfig["data_api"]["x-rapidapi-host"]
+      request["x-rapidapi-key"] = AppConfig["data_api"]["x-rapidapi-key"]
       response = http.request(request)
       teams_datas = JSON.parse(response.read_body, symbolize_names: true)[:api][:teams]
       attributes = Team.column_names - ["id", "country_id", "league_id", "created_at", "updated_at"]

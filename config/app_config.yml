@@ -1,0 +1,5 @@
+data_api:
+  api_link: "www.example.com"
+  api_demo_link: "www.example.com/demo"
+  x-rapidapi-host: "host"
+  x-rapidapi-key: "key"
