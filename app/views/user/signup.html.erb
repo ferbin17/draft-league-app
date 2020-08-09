@@ -1,0 +1,23 @@
+<div class="login-signup">
+  <% if flash[:success].present? %>
+    <div class="alert alert-success" role="alert">
+      <%= flash[:success] %>
+    </div>
+  <% end %>
+  <% if flash[:danger].present? %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:danger] %>
+    </div>
+  <% end %>
+  <h1>Sign Up</h1>
+  <%= form_with(model: @user, url: signup_user_index_path) do |f| %>
+    <%= f.text_field :full_name, placeholder: "Full Name", autocomplete: "off" %>
+    <%= f.email_field :email_id, placeholder: "Email", autocomplete: "off" %>
+    <%= f.text_field :username, placeholder: "Username", required: true, autocomplete: "off" %>
+    <%= f.text_field :phone_number, placeholder: "Phone Number", required: true, autocomplete: "off" %>
+    <%= f.password_field :password, placeholder: "Password", required: true %>
+    <%= f.password_field :confirm_password, placeholder: "Confirm Password", required: true %>
+    <%= f.submit "Sign Up", class: "btn-override btn-override-primary btn-override-block btn-override-large" %>
+    <p class="login-signup-links float-right" align="right"><%= link_to "Sign up", signup_user_index_path %><p>
+  <% end %>
+</div>
