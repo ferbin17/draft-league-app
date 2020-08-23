@@ -12,5 +12,14 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :draft_rooms do 
+    collection do 
+    end
+    member do
+      get 'start_auction'
+      get 'auction_room'
+    end
+  end
+  
   root to: 'user#dashboard'
 end

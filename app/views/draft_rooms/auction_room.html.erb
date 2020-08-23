@@ -1,0 +1,55 @@
+<% if @current_slot.present? %>
+  <% action_at_time = timer_handler(@current_slot) %>
+  <%= hidden_field_tag :draft_state, @current_slot.draft_state, readonly: true %>
+  <div>
+    <% case @current_slot.draft_state %>
+    <% when 0 %>
+      Auction starting in
+    <% when 1 %>
+      First Player in
+    <% when 2, 3 %>
+      Bidding closes in
+    <% when 4 %>
+      Next Player in
+    <% else %>
+      
+    <% end %>
+  </div>
+<% else %>
+  <% action_at_time = format_time_for_timer(@draft_room.date, @draft_room.time) %>
+  <% if action_at_time.split(" ").last.to_time <= Time.now.localtime %>
+    <div>Auction will start once Draft Room admin starts the auction</div>
+  <% end %>
+<% end %>
+
+<ul id="timer">
+  <li><span class="days"><%= date_diff(@draft_room) %></span><p class="days_text">Days</p></li>
+  <li class="seperator">:</li>
+  <li><span class="hours">00</span><p class="hours_text">Hours</p></li>
+  <li class="seperator">:</li>
+  <li><span class="minutes">00</span><p class="minutes_text">Minutes</p></li>
+  <li class="seperator">:</li>
+  <li><span class="seconds">00</span><p class="seconds_text">Seconds</p></li>
+</ul>
+
+<% if @player.present? %>
+  <div>
+    Current Player: <%= @player.name %><br><br>
+  </div>
+<% end %>
+<% if @player.present? %>
+  <div>
+    Next 10 Players<br>
+    <% @players.each do |player| %>
+      <%= player.name %><br>
+    <% end %>
+<% end %>
+<script>
+  $('#timer').countdown({
+    date: "<%= action_at_time %>"
+  }, function () {
+    if(($('#draft_state').val() == 0)||($('#draft_state').val() == 1)){
+      location.reload();
+    }
+  });
+</script>

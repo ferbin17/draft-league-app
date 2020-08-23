@@ -1,6 +1,7 @@
 Name: <%= @draft_room.name %><br>
 Date: <%= @draft_room.date %><br>
-Time: <%= @draft_room.time %><br>
-<% if is_owner(@current_user, @draft_room) && check_draft_starter(@draft_room) %>
+Time: <%= @draft_room.time.localtime %><br>
+<%= link_to "Go to Auction Room", auction_room_draft_room_path(@draft_room.id) unless @draft_room.draft_completed %>
+<% if !@current_slot.present? && is_owner(@current_user, @draft_room) && check_draft_starter(@draft_room) %>
   <%= link_to "Start the Auction", start_auction_draft_room_path(@draft_room.id) %>
 <% end %>

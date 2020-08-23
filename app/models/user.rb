@@ -3,6 +3,7 @@ class User < ApplicationRecord
   validates_presence_of :username, :phone_number, :password, :confirm_password
   validates :username, :email_id, :phone_number, uniqueness: { scope: :is_deleted, message: "already taken" , case_sensitive: true }
   validate :password_match, if: Proc.new{|user| user.password.present?}
+  has_many :draft_rooms
   before_save :hash_password
   scope :active, -> { where(is_deleted: false) }
   
