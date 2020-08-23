@@ -1,0 +1,7 @@
+<% if @draft_rooms.present? %>
+  <% @draft_rooms.each do |draft_room| %>
+    <%= link_to draft_room.name, draft_room %>
+  <% end %>
+<% else %>
+  No Draft rooms. <%= link_to "Click here to create one", new_draft_room_path %>
+<% end %>

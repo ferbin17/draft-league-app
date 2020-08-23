@@ -1,0 +1,9 @@
+<%= form_for @draft_room do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :date %>
+  <%= f.date_select :date %>
+  <%= f.label :time %>
+  <%= f.time_select :time %>
+  <%= f.submit "Create" %>
+<% end %>

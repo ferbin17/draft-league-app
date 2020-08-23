@@ -1,0 +1,6 @@
+Name: <%= @draft_room.name %><br>
+Date: <%= @draft_room.date %><br>
+Time: <%= @draft_room.time %><br>
+<% if is_owner(@current_user, @draft_room) && check_draft_starter(@draft_room) %>
+  <%= link_to "Start the Auction", start_auction_draft_room_path(@draft_room.id) %>
+<% end %>
